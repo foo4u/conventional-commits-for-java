@@ -1,5 +1,3 @@
-File touchFile = new File( basedir, "target/touch.txt" );
-File versionFile = new File( basedir, "target/version.txt" );
+File versionFile = new File( basedir, "target/version.props" );
 
-assert touchFile.isFile()
 assert versionFile.isFile()

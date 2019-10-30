@@ -8,15 +8,15 @@ import com.smartling.semantic.release.common.scm.ScmApiException;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -28,13 +28,16 @@ public class SemanticVersioningMojo extends AbstractMojo
     private final static String MVN_DEVELOPMENT_VERSION_PROPERTY = "developmentVersion";
     private final static String MVN_TAG_NAME_PROPERTY = "tag";
 
-    @Parameter(defaultValue = "${project.build.directory}", property = "outputDir", required = true) private File outputDirectory;
-    @Parameter(defaultValue = "${project.version}", required = true) private String versionString;
+    @Parameter(defaultValue = "${project.build.directory}", property = "outputDir", required = true)
+    private File outputDirectory;
 
-    @Parameter( defaultValue = "${session}", readonly = true, required = true )
+    @Parameter(defaultValue = "${project.version}", required = true)
+    private String versionString;
+
+    @Parameter(defaultValue = "${session}", readonly = true, required = true)
     private MavenSession session;
 
-    @Parameter( defaultValue = "${reactorProjects}", readonly = true, required = true )
+    @Parameter(defaultValue = "${reactorProjects}", readonly = true, required = true)
     private List<MavenProject> reactorProjects;
 
     public void execute() throws MojoExecutionException
@@ -49,21 +52,20 @@ public class SemanticVersioningMojo extends AbstractMojo
             SemanticVersion nextVersion = versioning.getNextVersion(SemanticVersion.parse(versionString.replace("-SNAPSHOT", "")));
             SemanticVersion nextDevelopmentVersion = nextVersion.nextVersion(SemanticVersionChange.PATCH);
 
-            writeVersionFile(nextVersion.toString(), nextDevelopmentVersion.toString() + "-SNAPSHOT");
-
             // set properties for release plugin
             props.setProperty(MVN_RELEASE_VERSION_PROPERTY, nextVersion.toString());
             props.setProperty(MVN_DEVELOPMENT_VERSION_PROPERTY, nextDevelopmentVersion.toString() + "-SNAPSHOT");
 
-            for (MavenProject project: reactorProjects)
+            for (MavenProject project : reactorProjects)
             {
-               String projectKey = project.getGroupId() + ":" + project.getArtifactId();
-               props.setProperty("project.rel." + projectKey, nextVersion.toString());
-               props.setProperty("project.dev." + projectKey, nextDevelopmentVersion.toString());
+                String projectKey = project.getGroupId() + ":" + project.getArtifactId();
+                props.setProperty("project.rel." + projectKey, nextVersion.toString());
+                props.setProperty("project.dev." + projectKey, nextDevelopmentVersion.toString());
             }
 
-           session.getExecutionProperties().putAll(props);
-           getLog().warn(String.format(Locale.US, "Set release properties: %s", props));
+            session.getExecutionProperties().putAll(props);
+            writeVersionFile(props);
+            getLog().warn(String.format(Locale.US, "Set release properties: %s", props));
         }
         catch (IOException | ScmApiException e)
         {
@@ -72,7 +74,7 @@ public class SemanticVersioningMojo extends AbstractMojo
 
     }
 
-    private void writeVersionFile(String nextVersion, String nextDevelopmentVersion) throws MojoExecutionException
+    private void writeVersionFile(Properties props) throws MojoExecutionException
     {
         File f = outputDirectory;
 
@@ -83,11 +85,9 @@ public class SemanticVersioningMojo extends AbstractMojo
 
         File touch = new File(f, "version.txt");
 
-        try (FileWriter w = new FileWriter(touch))
+        try (OutputStream out = new FileOutputStream(touch))
         {
-            w.write(String.format("Current version:  %s%n", versionString));
-            w.write(String.format("Next version:     %s%n", nextVersion));
-            w.write(String.format("Next dev version: %s%n", nextDevelopmentVersion));
+            props.store(out, "");
         }
         catch (IOException e)
         {

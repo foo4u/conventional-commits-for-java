@@ -45,7 +45,6 @@ public class SemanticVersioningMojoTest
 
         File touch = new File(outputDirectory, "version.txt");
         assertTrue(touch.exists());
-
     }
 
     /**
