@@ -1,6 +1,5 @@
 package com.smartling.conventional.plugin.maven;
 
-
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
@@ -15,48 +14,47 @@ import java.io.IOException;
 /**
  * Goal which touches a timestamp file.
  */
-@Mojo( name = "touch", defaultPhase = LifecyclePhase.PROCESS_SOURCES )
-public class MyMojo
-    extends AbstractMojo
+@Mojo(name = "touch", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
+public class MyMojo extends AbstractMojo
 {
     /**
      * Location of the file.
      */
-    @Parameter( defaultValue = "${project.build.directory}", property = "outputDir", required = true )
-    private File outputDirectory;
+    @Parameter(defaultValue = "${project.build.directory}", property = "outputDir", required = true) private File outputDirectory;
 
-    public void execute()
-        throws MojoExecutionException
+    @Parameter(defaultValue = "${project.version}", required = true) private String versionString;
+
+    public void execute() throws MojoExecutionException
     {
         File f = outputDirectory;
 
-        if ( !f.exists() )
+        if (!f.exists())
         {
             f.mkdirs();
         }
 
-        File touch = new File( f, "touch.txt" );
+        File touch = new File(f, "touch.txt");
 
         FileWriter w = null;
         try
         {
-            w = new FileWriter( touch );
+            w = new FileWriter(touch);
 
-            w.write( "touch.txt" );
+            w.write(String.format("Version string: %s%n", versionString));
         }
-        catch ( IOException e )
+        catch (IOException e)
         {
-            throw new MojoExecutionException( "Error creating file " + touch, e );
+            throw new MojoExecutionException("Error creating file " + touch, e);
         }
         finally
         {
-            if ( w != null )
+            if (w != null)
             {
                 try
                 {
                     w.close();
                 }
-                catch ( IOException e )
+                catch (IOException e)
                 {
                     // ignore
                 }
