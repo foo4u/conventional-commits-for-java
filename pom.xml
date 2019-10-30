@@ -5,8 +5,12 @@
     <artifactId>semantic-release-parent</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <modules>
         <module>semantic-release-common</module>
+        <module>semantic-maven-plugin</module>
     </modules>
     <name>semantic-release</name>
     <url>http://maven.apache.org</url>
