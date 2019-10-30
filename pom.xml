@@ -7,6 +7,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>semantic-release-common</module>
+        <module>semantic-maven-plugin</module>
     </modules>
     <name>semantic-release</name>
     <url>http://maven.apache.org</url>
