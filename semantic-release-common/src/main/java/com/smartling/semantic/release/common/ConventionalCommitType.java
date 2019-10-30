@@ -6,7 +6,10 @@ import java.util.List;
 public enum ConventionalCommitType implements Comparable<ConventionalCommitType>
 {
     BREAKING_CHANGE(SemanticVersionChange.MAJOR, "breaking change", "!"),
+    BUILD(SemanticVersionChange.NONE, "build"),
     CHORE(SemanticVersionChange.MINOR, "chore"),
+    CI(SemanticVersionChange.NONE, "ci"),
+    DOCS(SemanticVersionChange.NONE, "docs"),
     FIX(SemanticVersionChange.PATCH, "fix"),
     FEAT(SemanticVersionChange.MINOR, "feat"),
     TEST(SemanticVersionChange.NONE, "test");
