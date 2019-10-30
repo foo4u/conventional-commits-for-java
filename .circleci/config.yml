@@ -1,0 +1,24 @@
+version: 2
+jobs:
+    test:
+        docker:
+            - image: smartlingci/javajdk:11
+        environment:
+            JAVAOPTIONS: "-Xms512m -Xmx2048m"
+        steps:
+            - checkout
+            - run:
+                  name: Build & Test
+                  command: 'mvn clean test'
+            - run:
+                  name: Collect Test Results
+                  command: |
+                      mkdir test-results
+                      find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} test-results/ \;
+            - store_test_results:
+                  path: test-results
+workflows:
+    version: 2
+    check:
+        jobs:
+            - test
