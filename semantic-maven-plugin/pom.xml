@@ -4,11 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>semantic-release-parent</artifactId>
-        <groupId>com.smartling.conventional</groupId>
+        <groupId>com.smartling.ci</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.smartling.conventional.plugin.maven</groupId>
     <artifactId>semantic-maven-plugin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
@@ -25,7 +24,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.smartling.conventional</groupId>
+            <groupId>com.smartling.ci</groupId>
             <artifactId>semantic-release-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
