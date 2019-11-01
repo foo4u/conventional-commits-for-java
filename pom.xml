@@ -16,6 +16,7 @@
     <scm>
         <url>https://github.com/foo4u/semantic-release</url>
         <developerConnection>scm:git:ssh://git@github.com/foo4u/semantic-release</developerConnection>
+        <tag>HEAD</tag>
     </scm>
     <dependencies>
         <dependency>
@@ -55,6 +56,18 @@
                 <version>3.8.1</version>
                 <configuration>
                     <release>8</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <pushChanges>true</pushChanges>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                    <allowTimestampedSnapshots>true</allowTimestampedSnapshots>
+                    <scmCommentPrefix xml:space="preserve">ci: </scmCommentPrefix>
                 </configuration>
             </plugin>
         </plugins>
