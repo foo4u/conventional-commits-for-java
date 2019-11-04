@@ -1,6 +1,6 @@
-package com.smartling.ci.semantic.plugin.maven;
+package com.smartling.cc4j.semantic.plugin.maven;
 
-import com.smartling.ci.semantic.plugin.maven.context.MavenConventionalVersioning;
+import com.smartling.cc4j.semantic.plugin.maven.context.MavenConventionalVersioning;
 import com.smartling.cc4j.semantic.release.common.ConventionalVersioning;
 import com.smartling.cc4j.semantic.release.common.SemanticVersion;
 import com.smartling.cc4j.semantic.release.common.SemanticVersionChange;
@@ -22,7 +22,7 @@ import java.util.Locale;
 import java.util.Properties;
 
 @Mojo(name = "version", aggregator = true, defaultPhase = LifecyclePhase.VALIDATE)
-public class SemanticVersioningMojo extends AbstractMojo
+public class ConventionalVersioningMojo extends AbstractMojo
 {
     private final static String MVN_RELEASE_VERSION_PROPERTY = "releaseVersion";
     private final static String MVN_DEVELOPMENT_VERSION_PROPERTY = "developmentVersion";

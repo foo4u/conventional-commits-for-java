@@ -1,4 +1,4 @@
-package com.smartling.ci.semantic.plugin.maven.context;
+package com.smartling.cc4j.semantic.plugin.maven.context;
 
 import com.smartling.cc4j.semantic.release.common.ConventionalVersioning;
 import com.smartling.cc4j.semantic.release.common.GitConventionalVersioning;

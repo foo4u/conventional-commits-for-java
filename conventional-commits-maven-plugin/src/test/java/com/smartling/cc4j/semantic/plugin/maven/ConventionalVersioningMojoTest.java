@@ -1,4 +1,4 @@
-package com.smartling.ci.semantic.plugin.maven;
+package com.smartling.cc4j.semantic.plugin.maven;
 
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.WithoutMojo;
@@ -10,7 +10,7 @@ import java.io.File;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class SemanticVersioningMojoTest
+public class ConventionalVersioningMojoTest
 {
     @Rule public MojoRule rule = new MojoRule()
     {
@@ -35,7 +35,7 @@ public class SemanticVersioningMojoTest
         assertNotNull(pom);
         assertTrue(pom.exists());
 
-        SemanticVersioningMojo myMojo = (SemanticVersioningMojo) rule.lookupConfiguredMojo(pom, "version");
+        ConventionalVersioningMojo myMojo = (ConventionalVersioningMojo) rule.lookupConfiguredMojo(pom, "version");
         assertNotNull(myMojo);
         myMojo.execute();
 
