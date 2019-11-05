@@ -75,11 +75,11 @@
         <repository>
             <id>bintray-smartling-ci</id>
             <name>smartling-smartling-ci</name>
-            <url>https://api.bintray.com/maven/smartling/smartling-ci/semantic-release;publish=1</url>
+            <url>https://api.bintray.com/maven/smartling/smartling-ci/conventional-commits-for-java;publish=1</url>
         </repository>
         <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>bintray-smartling-ci</id>
+            <url>https://api.bintray.com/maven/smartling/smartling-ci/conventional-commits-for-java;publish=1</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
