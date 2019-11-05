@@ -4,11 +4,11 @@
     <parent>
         <artifactId>conventional-commits-parent</artifactId>
         <groupId>com.smartling.cc4j</groupId>
-        <version>0.0.10</version>
+        <version>0.0.11-SNAPSHOT</version>
     </parent>
 
     <artifactId>conventional-commits-maven-plugin</artifactId>
-    <version>0.0.10</version>
+    <version>0.0.11-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>Conventional Commits Maven Plugin</name>
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.smartling.cc4j</groupId>
             <artifactId>conventional-commits-common</artifactId>
-            <version>0.0.10</version>
+            <version>0.0.11-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
