@@ -71,6 +71,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
+		<configuration>
+                    <gpgArguments>
+                        <gpgArgument>--no-tty</gpgArgument>
+                        <gpgArgument>--batch</gpgArgument>
+                        <gpgArgument>--pinentry-mode</gpgArgument>
+                        <gpgArgument>loopback</gpgArgument>
+                    </gpgArguments>
+                </configuration>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
