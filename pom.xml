@@ -103,6 +103,13 @@
             </plugin>
         </plugins>
     </build>
+    <developers>
+        <developer>
+            <name>Scott Rossillo</name>
+            <organization>Smartling, Inc.</organization>
+            <url>https://github.com/foo4u/</url>
+        </developer>
+    </developers>
     <distributionManagement>
         <repository>
             <id>sonatype-oss-staging</id>
