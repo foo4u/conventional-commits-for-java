@@ -12,6 +12,7 @@
         <module>conventional-commits-maven-plugin</module>
     </modules>
     <name>Conventional Commits Parent</name>
+    <description>Provides conventional commits plugins for Java build systems.</description>
 
     <licenses>
         <license>
