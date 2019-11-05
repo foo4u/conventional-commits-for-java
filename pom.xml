@@ -3,7 +3,7 @@
     <groupId>com.smartling.cc4j</groupId>
     <artifactId>conventional-commits-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.10-SNAPSHOT</version>
+    <version>0.0.10</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -23,7 +23,7 @@
     <scm>
         <url>https://github.com/foo4u/conventional-commits-for-java</url>
         <developerConnection>scm:git:ssh://git@github.com/foo4u/conventional-commits-for-java</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v0.0.10</tag>
     </scm>
 
     <url>https://github.com/foo4u/conventional-commits-for-java</url>
