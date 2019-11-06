@@ -129,9 +129,9 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>@project.groupId@</groupId>
+                        <groupId>com.smartling.cc4j</groupId>
                         <artifactId>conventional-commits-maven-plugin</artifactId>
-                        <version>@project.version@</version>
+                        <version>0.0.11</version>
                         <executions>
                             <execution>
                                 <id>version</id>
