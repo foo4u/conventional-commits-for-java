@@ -135,6 +135,7 @@
                         <executions>
                             <execution>
                                 <id>version</id>
+                                <phase>verify</phase>
                                 <goals>
                                     <goal>version</goal>
                                 </goals>
