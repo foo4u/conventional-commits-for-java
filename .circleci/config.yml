@@ -29,9 +29,16 @@ jobs:
                   name: Release
                   command: |
                       gpg --no-tty --batch --pinentry-mode loopback --passphrase ${GPG_SIGNING_PASSWORD} --clear-sign pom.xml
-                      ./mvnw -B -DskipTests -Darguments=-DskipTests -s .circleci/settings.xml release:prepare
+                      ./mvnw -B -Pinternal-release -DskipTests -Darguments='-DskipTests' -s .circleci/settings.xml conventional-commits:version release:prepare
 workflows:
     version: 2
-    check:
+    build_and_release:
         jobs:
             - test
+            -  deploy:
+                    requires:
+                        - test
+                    filters:
+                        branches:
+                            only: ci
+
