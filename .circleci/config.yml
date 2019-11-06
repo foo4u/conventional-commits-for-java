@@ -2,14 +2,14 @@ version: 2
 jobs:
     test:
         docker:
-            - image: smartlingci/javajdk:11
+            - image: javajdk:11
         environment:
             JAVAOPTIONS: "-Xms512m -Xmx2048m"
         steps:
             - checkout
             - run:
                   name: Build & Test
-                  command: 'mvn clean test'
+                  command: './mvnw clean test'
             - run:
                   name: Collect Test Results
                   command: |
@@ -17,6 +17,19 @@ jobs:
                       find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} test-results/ \;
             - store_test_results:
                   path: test-results
+    deploy:
+        docker:
+            - image: javajdk:11
+        steps:
+            - checkout
+            - run:
+                  name: Import GPG Key
+                  command: gpg --batch --passphrase ${GPG_SIGNING_PASSWORD} --import .circleci/gpg.key.txt
+            - run:
+                  name: Release
+                  command: |
+                      gpg --no-tty --batch --pinentry-mode loopback --passphrase ${GPG_SIGNING_PASSWORD} --clear-sign pom.xml
+                      ./mvnw -B -DskipTests -Darguments=-DskipTests -s .circleci/settings.xml release:prepare
 workflows:
     version: 2
     check:
