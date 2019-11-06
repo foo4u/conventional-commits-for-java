@@ -97,6 +97,7 @@
                 <version>2.5.3</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <dryRun>true</dryRun>
                     <pushChanges>true</pushChanges>
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                     <allowTimestampedSnapshots>false</allowTimestampedSnapshots>
