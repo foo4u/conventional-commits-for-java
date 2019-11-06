@@ -97,6 +97,7 @@
                 <version>2.5.3</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <dryRun>true</dryRun>
                     <pushChanges>true</pushChanges>
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                     <allowTimestampedSnapshots>false</allowTimestampedSnapshots>
@@ -122,4 +123,26 @@
             <url>https://api.bintray.com/maven/smartling/smartling-ci/conventional-commits-for-java;publish=1</url>
         </snapshotRepository>
     </distributionManagement>
+    <profiles>
+        <profile>
+            <id>internal-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>@project.groupId@</groupId>
+                        <artifactId>@project.artifactId@</artifactId>
+                        <version>@project.version@</version>
+                        <executions>
+                            <execution>
+                                <id>version</id>
+                                <goals>
+                                    <goal>version</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
