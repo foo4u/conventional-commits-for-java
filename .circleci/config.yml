@@ -29,7 +29,7 @@ jobs:
                   name: Release
                   command: |
                       gpg --no-tty --batch --pinentry-mode loopback --passphrase ${GPG_SIGNING_PASSWORD} --clear-sign pom.xml
-                      ./mvnw -B -Pinternal-release -DskipTests -Darguments='-DskipTests' -s .circleci/settings.xml conventional-commits:version release:prepare
+                      ./mvnw -B -Prelease -DskipTests -Darguments='-DskipTests' -s .circleci/settings.xml conventional-commits:version release:prepare
 workflows:
     version: 2
     build_and_release:

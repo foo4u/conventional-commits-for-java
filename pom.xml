@@ -125,7 +125,7 @@
     </distributionManagement>
     <profiles>
         <profile>
-            <id>internal-release</id>
+            <id>release</id>
             <build>
                 <plugins>
                     <plugin>
