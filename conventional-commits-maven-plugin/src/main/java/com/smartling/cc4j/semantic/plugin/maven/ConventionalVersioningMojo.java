@@ -22,46 +22,16 @@ import java.util.Locale;
 import java.util.Properties;
 
 @Mojo(name = "version", aggregator = true, defaultPhase = LifecyclePhase.VALIDATE)
-public class ConventionalVersioningMojo extends AbstractMojo
+public class ConventionalVersioningMojo extends AbstractVersioningMojo
 {
-    private final static String MVN_RELEASE_VERSION_PROPERTY = "releaseVersion";
-    private final static String MVN_DEVELOPMENT_VERSION_PROPERTY = "developmentVersion";
-    private final static String MVN_TAG_NAME_PROPERTY = "tag";
-
-    @Parameter(defaultValue = "${project.build.directory}", property = "outputDir", required = true)
-    private File outputDirectory;
-
-    @Parameter(defaultValue = "${project.version}", required = true)
-    private String versionString;
-
     @Parameter(defaultValue = "${session}", readonly = true, required = true)
     private MavenSession session;
 
-    @Parameter(defaultValue = "${reactorProjects}", readonly = true, required = true)
-    private List<MavenProject> reactorProjects;
-
     public void execute() throws MojoExecutionException
     {
-        MavenConventionalVersioning mvnConventionalVersioning;
-        Properties props = new Properties();
-
         try
         {
-            mvnConventionalVersioning = new MavenConventionalVersioning();
-            ConventionalVersioning versioning = mvnConventionalVersioning.getConventionalVersioning();
-            SemanticVersion nextVersion = versioning.getNextVersion(SemanticVersion.parse(versionString.replace("-SNAPSHOT", "")));
-            SemanticVersion nextDevelopmentVersion = nextVersion.nextVersion(SemanticVersionChange.PATCH);
-
-            // set properties for release plugin
-            props.setProperty(MVN_RELEASE_VERSION_PROPERTY, nextVersion.toString());
-            props.setProperty(MVN_DEVELOPMENT_VERSION_PROPERTY, nextDevelopmentVersion.toString() + "-SNAPSHOT");
-
-            for (MavenProject project : reactorProjects)
-            {
-                String projectKey = project.getGroupId() + ":" + project.getArtifactId();
-                props.setProperty("project.rel." + projectKey, nextVersion.toString());
-                props.setProperty("project.dev." + projectKey, nextDevelopmentVersion.toString());
-            }
+            Properties props = this.createReleaseProperties();
 
             session.getExecutionProperties().putAll(props);
             writeVersionFile(props);
@@ -71,7 +41,6 @@ public class ConventionalVersioningMojo extends AbstractMojo
         {
             throw new MojoExecutionException("SCM error: " + e.getMessage(), e);
         }
-
     }
 
     private void writeVersionFile(Properties props) throws MojoExecutionException
