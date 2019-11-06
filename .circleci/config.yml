@@ -2,7 +2,7 @@ version: 2
 jobs:
     test:
         docker:
-            - image: javajdk:11
+            - image: openjdk:11
         environment:
             JAVAOPTIONS: "-Xms512m -Xmx2048m"
         steps:
@@ -19,7 +19,7 @@ jobs:
                   path: test-results
     deploy:
         docker:
-            - image: javajdk:11
+            - image: openjdk:11
         steps:
             - checkout
             - run:
