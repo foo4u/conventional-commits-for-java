@@ -130,14 +130,14 @@
                 <plugins>
                     <plugin>
                         <groupId>@project.groupId@</groupId>
-                        <artifactId>@project.artifactId@</artifactId>
+                        <artifactId>conventional-commits-maven-plugin</artifactId>
                         <version>@project.version@</version>
                         <executions>
                             <execution>
                                 <id>version</id>
                                 <phase>verify</phase>
                                 <goals>
-                                    <goal>xversion</goal>
+                                    <goal>version</goal>
                                 </goals>
                             </execution>
                         </executions>
