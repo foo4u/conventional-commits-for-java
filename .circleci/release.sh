@@ -8,4 +8,5 @@ if ! ./mvnw -Prelease conventional-commits:validate; then
     exit 0
 fi
 
-./mvnw -e -X -B -Prelease -DskipTests -Darguments='-DskipTests' -s .circleci/settings.xml conventional-commits:version release:prepare
+./mvnw -B -Prelease -DskipTests -Darguments='-DskipTests' -s .circleci/settings.xml conventional-commits:version release:prepare
+./mvnw -B -DskipTests -Darguments=-DskipTests -s .circleci/settings.xml release:perform
