@@ -40,5 +40,5 @@ workflows:
                         - test
                     filters:
                         branches:
-                            only: ci
+                            only: master
 
