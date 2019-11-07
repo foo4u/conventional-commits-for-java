@@ -126,12 +126,22 @@
     <profiles>
         <profile>
             <id>release</id>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>local-plugins</id>
+                    <url>file://${env.HOME}/.m2/repository</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>com.smartling.cc4j</groupId>
                         <artifactId>conventional-commits-maven-plugin</artifactId>
-                        <version>0.0.11</version>
+                        <version>${project.version}</version>
+                        <!--
                         <executions>
                             <execution>
                                 <id>version</id>
@@ -141,6 +151,7 @@
                                 </goals>
                             </execution>
                         </executions>
+                        -->
                     </plugin>
                 </plugins>
             </build>
