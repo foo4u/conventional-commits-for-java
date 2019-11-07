@@ -21,6 +21,9 @@ jobs:
         docker:
             - image: openjdk:11
         steps:
+            - add_ssh_keys:
+                  fingerprints:
+                      - "41:39:00:c2:03:ff:ec:12:30:d4:f0:73:92:43:41:81"
             - checkout
             - run:
                   name: Import GPG Key
@@ -29,7 +32,7 @@ jobs:
                   name: Release
                   command: |
                       gpg --no-tty --batch --pinentry-mode loopback --passphrase ${GPG_SIGNING_PASSWORD} --clear-sign pom.xml
-                      ./mvnw -B -Prelease -DskipTests -Darguments='-DskipTests' -s .circleci/settings.xml conventional-commits:version release:prepare
+                      ./.circleci/release.sh
 workflows:
     version: 2
     build_and_release:
