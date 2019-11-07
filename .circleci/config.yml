@@ -29,6 +29,11 @@ jobs:
                   name: Import GPG Key
                   command: gpg --batch --passphrase ${GPG_SIGNING_PASSWORD} --import .circleci/gpg.key.txt
             - run:
+                  name: Configure Git
+                  command: |
+                      git config --global user.email "artifacts@smartling.com"
+                      git config --global user.name "Smartling, Inc."
+            - run:
                   name: Release
                   command: |
                       gpg --no-tty --batch --pinentry-mode loopback --passphrase ${GPG_SIGNING_PASSWORD} --clear-sign pom.xml
