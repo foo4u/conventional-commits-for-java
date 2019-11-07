@@ -10,7 +10,7 @@ import java.io.File;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class ConventionalVersioningMojoTest
+public class ConventionalVersioningMojoTest extends AbstractScmMojoTest
 {
     @Rule public MojoRule rule = new MojoRule()
     {
@@ -31,7 +31,7 @@ public class ConventionalVersioningMojoTest
     @Test
     public void testExecute() throws Exception
     {
-        File pom = new File("target/test-classes/project-to-test/");
+        File pom = projectPath.toFile();
         assertNotNull(pom);
         assertTrue(pom.exists());
 
