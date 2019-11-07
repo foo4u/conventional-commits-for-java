@@ -8,7 +8,7 @@ public interface ConventionalVersioning
 {
     LogHandler logHandler();
 
-    SemanticVersionChangeResolver semanticVersionChangeResolver();
+    SemanticVersionChange getNextVersionChangeType() throws ScmApiException, IOException;
 
     SemanticVersion getNextVersion(SemanticVersion currentVersion) throws IOException, ScmApiException;
 }

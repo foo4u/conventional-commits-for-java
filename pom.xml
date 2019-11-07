@@ -72,7 +72,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-		<configuration>
+                <version>1.6</version>
+                <configuration>
                     <gpgArguments>
                         <gpgArgument>--no-tty</gpgArgument>
                         <gpgArgument>--batch</gpgArgument>
@@ -96,6 +97,7 @@
                 <version>2.5.3</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <dryRun>true</dryRun>
                     <pushChanges>true</pushChanges>
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                     <allowTimestampedSnapshots>false</allowTimestampedSnapshots>
@@ -121,4 +123,27 @@
             <url>https://api.bintray.com/maven/smartling/smartling-ci/conventional-commits-for-java;publish=1</url>
         </snapshotRepository>
     </distributionManagement>
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.smartling.cc4j</groupId>
+                        <artifactId>conventional-commits-maven-plugin</artifactId>
+                        <version>0.0.11</version>
+                        <executions>
+                            <execution>
+                                <id>version</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>version</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
