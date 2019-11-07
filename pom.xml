@@ -132,6 +132,7 @@
                         <groupId>com.smartling.cc4j</groupId>
                         <artifactId>conventional-commits-maven-plugin</artifactId>
                         <version>0.1.0</version>
+                        <inherited>false</inherited>
                         <executions>
                             <execution>
                                 <id>version</id>
