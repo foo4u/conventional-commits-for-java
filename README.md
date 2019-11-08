@@ -16,15 +16,15 @@ In your main `pom.xml` file add the plugin:
 
     <plugins>
         <plugin>
-            <groupId>com.smartling.ci</groupId>
-            <artifactId>semantic-maven-plugin</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>com.smartling.cc4j</groupId>
+            <artifactId>conventional-commits-maven-plugin</artifactId>
+            <version>${version}</version>
         </plugin>
     </plugins>
 
 #### Release a Version
 
-    mvn semantic:version release:prepare
+    mvn conventional-commits:version release:prepare
     mvn release:perform
 
 ## Gradle Plugin
