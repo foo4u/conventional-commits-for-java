@@ -37,11 +37,7 @@ public class LogHandler {
         List<Ref> tags = git.tagList().call();
         List<ObjectId> peeledTags = tags.stream().map(t -> repository.peel(t).getPeeledObjectId()).collect(Collectors.toList());
         PlotWalk walk = new PlotWalk(repository);
-        ObjectId head = repository.resolve(HEAD_COMMIT_ALIAS);
-        if (head == null) {
-            return null;
-        }
-        RevCommit start = walk.parseCommit(head);
+        RevCommit start = walk.parseCommit(repository.resolve(HEAD_COMMIT_ALIAS));
 
         walk.markStart(start);
 
