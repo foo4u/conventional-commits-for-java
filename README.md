@@ -1,8 +1,8 @@
 # The fork of Conventional Commits for Java
+**NOTE:** The fork includes additional maven goal which enables to generate changelog files automatically.
 
 Provides a Java implementation of [Conventional Commits] for projects built
 with Java 1.8+ using Git for version control.
-The fork include additional goal that enables to generate changelog files automatically
 ## Maven Plugin
 
 ### Usage
