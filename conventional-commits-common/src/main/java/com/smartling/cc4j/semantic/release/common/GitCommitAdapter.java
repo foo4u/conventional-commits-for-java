@@ -8,7 +8,7 @@ public class GitCommitAdapter implements CommitAdapter<RevCommit>
 {
     private final RevCommit commit;
 
-    GitCommitAdapter(RevCommit commit)
+    public GitCommitAdapter(RevCommit commit)
     {
         Objects.requireNonNull(commit, "commit cannot be null");
         this.commit = commit;
@@ -24,5 +24,11 @@ public class GitCommitAdapter implements CommitAdapter<RevCommit>
     public RevCommit getCommit()
     {
         return commit;
+    }
+
+    @Override
+    public String getCommitHash()
+    {
+        return commit.getName();
     }
 }

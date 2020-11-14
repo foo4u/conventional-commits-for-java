@@ -66,44 +66,46 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <release>8</release>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <verbose>true</verbose>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
-                <configuration>
-                    <gpgArguments>
-                        <gpgArgument>--no-tty</gpgArgument>
-                        <gpgArgument>--batch</gpgArgument>
-                        <gpgArgument>--pinentry-mode</gpgArgument>
-                        <gpgArgument>loopback</gpgArgument>
-                    </gpgArguments>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
-                <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <dryRun>false</dryRun>
-                    <pushChanges>true</pushChanges>
-                    <tagNameFormat>v@{project.version}</tagNameFormat>
-                    <allowTimestampedSnapshots>false</allowTimestampedSnapshots>
-                    <scmCommentPrefix xml:space="preserve">ci: </scmCommentPrefix>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-gpg-plugin</artifactId>-->
+<!--                <version>1.6</version>-->
+<!--                <configuration>-->
+<!--                    <gpgArguments>-->
+<!--                        <gpgArgument>&#45;&#45;no-tty</gpgArgument>-->
+<!--                        <gpgArgument>&#45;&#45;batch</gpgArgument>-->
+<!--                        <gpgArgument>&#45;&#45;pinentry-mode</gpgArgument>-->
+<!--                        <gpgArgument>loopback</gpgArgument>-->
+<!--                    </gpgArguments>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>sign-artifacts</id>-->
+<!--                        <phase>verify</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>sign</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-release-plugin</artifactId>-->
+<!--                <version>2.5.3</version>-->
+<!--                <configuration>-->
+<!--                    <autoVersionSubmodules>true</autoVersionSubmodules>-->
+<!--                    <dryRun>false</dryRun>-->
+<!--                    <pushChanges>true</pushChanges>-->
+<!--                    <tagNameFormat>v@{project.version}</tagNameFormat>-->
+<!--                    <allowTimestampedSnapshots>false</allowTimestampedSnapshots>-->
+<!--                    <scmCommentPrefix xml:space="preserve">ci: </scmCommentPrefix>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
     <developers>
