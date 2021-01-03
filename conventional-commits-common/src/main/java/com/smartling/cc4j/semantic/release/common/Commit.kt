@@ -5,70 +5,41 @@ import com.smartling.cc4j.semantic.release.common.ConventionalCommitType
 import java.util.*
 import java.util.regex.Pattern
 
-class Commit(commit: CommitAdapter<*>) {
-    private val commit: CommitAdapter<*>
+class Commit(private val commit: CommitAdapter<*>) {
+
+    private fun getMessageForComparison(): String = this.commit.getShortMessage().toLowerCase()
 
     /**
      * Returns true if this commit is written in conventional commit style;
      * false otherwise.
      */
-    val isConventional: Boolean
-        get() = commitType.isPresent
+    fun isConventional(): Boolean = this.getCommitType() != null
 
-    // FIXME: check for breaking change in footer
-/*
-        for (FooterLine footerLine : commit.getFooterLines())
-        {
-            if (footerLine.getKey().equalsIgnoreCase(ConventionalCommitType.BREAKING_CHANGE.getCommitTypes().get(0))) {
-                type = ConventionalCommitType.BREAKING_CHANGE;
-                break;
-            }
-        }
+    private fun isBreaking(): Boolean {
+        val msg = this.getMessageForComparison()
+        return BREAKING_REGEX.matcher(msg).matches()
+    }
 
- */
-    val commitType: Optional<ConventionalCommitType>
-        get() {
-            val msg = messageForComparison
-            var type: ConventionalCommitType? = null
-            if (msg.startsWith("!")) {
-                return Optional.empty()
-            }
-            if (BREAKING_REGEX.matcher(msg).matches()) {
-                return Optional.of(ConventionalCommitType.BREAKING_CHANGE)
-            }
-            for (cc in ConventionalCommitType.values()) {
-                for (t in cc.commitTypes) {
-                    if (msg.startsWith(t!!)) {
-                        type = cc
-                        break
-                    }
+    fun getCommitType(): ConventionalCommitType? {
+        val msg = this.getMessageForComparison()
+        var type: ConventionalCommitType? = null
+
+        if (this.isBreaking())
+            return ConventionalCommitType.BREAKING_CHANGE
+
+        for (cc in ConventionalCommitType.values()) {
+            for (t in cc.commitTypes) {
+                if (msg.startsWith(t)) {
+                    type = cc
+                    break
                 }
             }
-
-            // FIXME: check for breaking change in footer
-/*
-        for (FooterLine footerLine : commit.getFooterLines())
-        {
-            if (footerLine.getKey().equalsIgnoreCase(ConventionalCommitType.BREAKING_CHANGE.getCommitTypes().get(0))) {
-                type = ConventionalCommitType.BREAKING_CHANGE;
-                break;
-            }
         }
 
- */return Optional.ofNullable(type)
-        }
-    private val messageForComparison: String
-        private get() {
-            val msg = commit.shortMessage
-            return msg?.toLowerCase() ?: ""
-        }
+    return type
+}
 
     companion object {
         private val BREAKING_REGEX = Pattern.compile("^(fix|feat)!.+", Pattern.CASE_INSENSITIVE)
-    }
-
-    init {
-        Objects.requireNonNull(commit, "commit may not be null")
-        this.commit = commit
     }
 }

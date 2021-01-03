@@ -8,14 +8,15 @@ class SimpleSemanticVersionChangeResolver : SemanticVersionChangeResolver {
         commits.iterator().forEachRemaining { c: RevCommit -> commitList.add(Commit(GitCommitAdapter(c))) }
         var change = SemanticVersionChange.NONE
 
+        // FIXME: this needs to be optimized
         for (c in commitList) {
-            val commitType = c.commitType
-            if (commitType.isPresent) {
-                if (SemanticVersionChange.MAJOR == commitType.get().changeType) {
+            val commitType = c.getCommitType()
+            if (commitType != null) {
+                if (SemanticVersionChange.MAJOR == commitType.changeType) {
                     return SemanticVersionChange.MAJOR
-                } else if (SemanticVersionChange.MINOR == commitType.get().changeType) {
+                } else if (SemanticVersionChange.MINOR == commitType.changeType) {
                     change = SemanticVersionChange.MINOR
-                } else if (SemanticVersionChange.PATCH == commitType.get().changeType) {
+                } else if (SemanticVersionChange.PATCH == commitType.changeType) {
                     if (SemanticVersionChange.MINOR != change) {
                         change = SemanticVersionChange.PATCH
                     }
@@ -24,4 +25,6 @@ class SimpleSemanticVersionChangeResolver : SemanticVersionChangeResolver {
         }
         return change
     }
+
+//    private fun
 }

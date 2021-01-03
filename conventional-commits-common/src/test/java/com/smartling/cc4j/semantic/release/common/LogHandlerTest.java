@@ -49,24 +49,18 @@ public class LogHandlerTest {
     @After
     public void tearDown() throws Exception
     {
-        //Files.delete(tempDir);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void contructor()
-    {
-        new LogHandler(null);
+//        Files.delete(tempDir);
     }
 
     @Test
     public void getLastTaggedCommit() throws IOException, GitAPIException {
-        assertNull(logHandler.getLastTaggedCommit());
+        assertNull(logHandler.findLastTaggedCommit());
     }
 
     @Test
     public void getLastTaggedCommitTagFound() throws IOException, GitAPIException {
         git.tag().setAnnotated(true).setName("v1.0.0").setMessage("Release 1.0.0").call();
-        assertNotNull(logHandler.getLastTaggedCommit());
+        assertNotNull(logHandler.findLastTaggedCommit());
     }
 
     @Test
