@@ -1,55 +1,67 @@
-package com.smartling.cc4j.semantic.release.common;
+package com.smartling.cc4j.semantic.release.common
 
-import org.junit.Test;
+import com.smartling.cc4j.semantic.release.common.Commit.isConventional
+import com.smartling.cc4j.semantic.release.common.Commit.commitType
+import com.smartling.cc4j.semantic.release.common.CommitTest
+import com.smartling.cc4j.semantic.release.common.ConventionalCommitType
+import com.smartling.cc4j.semantic.release.common.DummyCommitAdapter
+import org.junit.Assert
 
-import static org.junit.Assert.*;
+class CommitTest {
+    @get:Test
+    val isConventional: Unit
+        get() {
+            Assert.assertTrue(create("fix!: new version").isConventional)
+            Assert.assertTrue(create("fix: fix foo").isConventional)
+            Assert.assertTrue(create("feat!: add foo").isConventional)
+            Assert.assertTrue(create("feat: add foo").isConventional)
+            Assert.assertFalse(create("Add foo").isConventional)
+        }
 
-public class CommitTest
-{
-    @Test
-    public void isConventional()
-    {
-        assertTrue(create("fix!: new version").isConventional());
-        assertTrue(create("fix: fix foo").isConventional());
-        assertTrue(create("feat!: add foo").isConventional());
-        assertTrue(create("feat: add foo").isConventional());
-        assertFalse(create("Add foo").isConventional());
-    }
+    @get:Test
+    val commitTypeBreakingChange: Unit
+        get() {
+            Assert.assertEquals(
+                ConventionalCommitType.BREAKING_CHANGE,
+                create("breaking change: new version").commitType.get()
+            )
+            Assert.assertEquals(
+                ConventionalCommitType.BREAKING_CHANGE,
+                create("Breaking Change: add foo").commitType.get()
+            )
+            Assert.assertEquals(
+                ConventionalCommitType.BREAKING_CHANGE,
+                create("BREAKING CHANGE(scope): add foo").commitType.get()
+            )
+        }
 
-    @Test
-    public void getCommitTypeBreakingChange()
-    {
-        assertEquals(ConventionalCommitType.BREAKING_CHANGE, create("breaking change: new version").getCommitType().get());
-        assertEquals(ConventionalCommitType.BREAKING_CHANGE, create("Breaking Change: add foo").getCommitType().get());
-        assertEquals(ConventionalCommitType.BREAKING_CHANGE, create("BREAKING CHANGE(scope): add foo").getCommitType().get());
-    }
+    @get:Test
+    val commitTypeBreakingChangeExclamation: Unit
+        get() {
+            Assert.assertEquals(ConventionalCommitType.BREAKING_CHANGE, create("fix!: new version").commitType.get())
+            Assert.assertEquals(ConventionalCommitType.BREAKING_CHANGE, create("feat!: new version").commitType.get())
+            Assert.assertEquals(ConventionalCommitType.TEST, create("test!: new version").commitType.get())
+        }
 
-    @Test
-    public void getCommitTypeBreakingChangeExclamation()
-    {
-        assertEquals(ConventionalCommitType.BREAKING_CHANGE, create("fix!: new version").getCommitType().get());
-        assertEquals(ConventionalCommitType.BREAKING_CHANGE, create("feat!: new version").getCommitType().get());
-        assertEquals(ConventionalCommitType.TEST, create("test!: new version").getCommitType().get());
-    }
+    @get:Test
+    val commitTypeFeat: Unit
+        get() {
+            Assert.assertEquals(ConventionalCommitType.FEAT, create("feat: add foo").commitType.get())
+            Assert.assertEquals(ConventionalCommitType.FEAT, create("Feat: add foo").commitType.get())
+            Assert.assertEquals(ConventionalCommitType.FEAT, create("feat(scope): add foo").commitType.get())
+        }
 
-    @Test
-    public void getCommitTypeFeat()
-    {
-        assertEquals(ConventionalCommitType.FEAT, create("feat: add foo").getCommitType().get());
-        assertEquals(ConventionalCommitType.FEAT, create("Feat: add foo").getCommitType().get());
-        assertEquals(ConventionalCommitType.FEAT, create("feat(scope): add foo").getCommitType().get());
-    }
+    @get:Test
+    val commitTypeFix: Unit
+        get() {
+            Assert.assertEquals(ConventionalCommitType.FIX, create("fix: foo").commitType.get())
+            Assert.assertEquals(ConventionalCommitType.FIX, create("Fix: foo").commitType.get())
+            Assert.assertEquals(ConventionalCommitType.FIX, create("fix(scope): foo").commitType.get())
+        }
 
-    @Test
-    public void getCommitTypeFix()
-    {
-        assertEquals(ConventionalCommitType.FIX, create("fix: foo").getCommitType().get());
-        assertEquals(ConventionalCommitType.FIX, create("Fix: foo").getCommitType().get());
-        assertEquals(ConventionalCommitType.FIX, create("fix(scope): foo").getCommitType().get());
-    }
-
-    static Commit create(String shortMessage)
-    {
-        return new Commit(new DummyCommitAdapter(shortMessage));
+    companion object {
+        fun create(shortMessage: String?): Commit {
+            return Commit(DummyCommitAdapter(shortMessage))
+        }
     }
 }
