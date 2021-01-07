@@ -1,5 +1,7 @@
 package com.smartling.cc4j.semantic.release.common;
 
+import org.jetbrains.annotations.Nullable;
+
 class DummyCommitAdapter implements CommitAdapter<DummyCommitAdapter>
 {
     private final String shortMessage;
@@ -17,6 +19,13 @@ class DummyCommitAdapter implements CommitAdapter<DummyCommitAdapter>
 
     @Override
     public DummyCommitAdapter getCommit()
+    {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public ConventionalCommitType getCommitType()
     {
         return null;
     }

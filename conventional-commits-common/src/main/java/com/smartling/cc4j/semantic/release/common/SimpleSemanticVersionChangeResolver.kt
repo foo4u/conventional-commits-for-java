@@ -4,27 +4,26 @@ import org.eclipse.jgit.revwalk.RevCommit
 
 class SimpleSemanticVersionChangeResolver : SemanticVersionChangeResolver {
     override fun resolveChange(commits: Iterable<RevCommit>): SemanticVersionChange {
-        val commitList: MutableList<Commit> = ArrayList()
-        commits.iterator().forEachRemaining { c: RevCommit -> commitList.add(Commit(GitCommitAdapter(c))) }
-        var change = SemanticVersionChange.NONE
-
-        // FIXME: this needs to be optimized
-        for (c in commitList) {
-            val commitType = c.getCommitType()
-            if (commitType != null) {
-                if (SemanticVersionChange.MAJOR == commitType.changeType) {
-                    return SemanticVersionChange.MAJOR
-                } else if (SemanticVersionChange.MINOR == commitType.changeType) {
-                    change = SemanticVersionChange.MINOR
-                } else if (SemanticVersionChange.PATCH == commitType.changeType) {
-                    if (SemanticVersionChange.MINOR != change) {
-                        change = SemanticVersionChange.PATCH
-                    }
+        return commits
+            .map { c -> Commit(GitCommitAdapter(c)) }
+            .fold(SemanticVersionChange.NONE) { type, commit ->
+                val changeType = this.resolveChange(commit)
+                return when {
+                    SemanticVersionChange.MAJOR == changeType -> SemanticVersionChange.MAJOR
+                    SemanticVersionChange.MINOR == changeType && SemanticVersionChange.MAJOR != type -> SemanticVersionChange.MINOR
+                    SemanticVersionChange.PATCH == changeType && SemanticVersionChange.MINOR != type -> SemanticVersionChange.PATCH
+                    else -> type
                 }
             }
-        }
-        return change
     }
 
-//    private fun
+    fun resolveChange(commit: Commit): SemanticVersionChange {
+        val changeType = commit.getCommitType()?.changeType
+        return when {
+            SemanticVersionChange.MAJOR == changeType -> SemanticVersionChange.MAJOR
+            SemanticVersionChange.MINOR == changeType -> SemanticVersionChange.MINOR
+            SemanticVersionChange.PATCH == changeType -> SemanticVersionChange.PATCH
+            else -> SemanticVersionChange.NONE
+        }
+    }
 }
