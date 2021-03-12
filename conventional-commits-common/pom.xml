@@ -3,7 +3,7 @@
     <parent>
         <artifactId>conventional-commits-parent</artifactId>
         <groupId>com.smartling.cc4j</groupId>
-        <version>0.2.0</version>
+        <version>0.2.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
