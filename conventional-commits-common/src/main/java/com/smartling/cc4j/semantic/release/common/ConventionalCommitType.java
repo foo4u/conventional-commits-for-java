@@ -12,6 +12,7 @@ public enum ConventionalCommitType implements Comparable<ConventionalCommitType>
     DOCS(SemanticVersionChange.PATCH, "docs"),
     FIX(SemanticVersionChange.PATCH, "fix"),
     FEAT(SemanticVersionChange.MINOR, "feat"),
+    REFACTOR(SemanticVersionChange.MINOR, "refactor"),
     TEST(SemanticVersionChange.NONE, "test");
 
     private final List<String> commitTypes;
