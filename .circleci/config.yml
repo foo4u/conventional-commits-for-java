@@ -23,7 +23,7 @@ jobs:
         steps:
             - add_ssh_keys:
                   fingerprints:
-                      - "41:39:00:c2:03:ff:ec:12:30:d4:f0:73:92:43:41:81"
+                      - "ad:df:f7:20:05:10:5c:4a:d8:25:e5:42:c1:67:10:2a"
             - checkout
             - run:
                   name: Import GPG Key
