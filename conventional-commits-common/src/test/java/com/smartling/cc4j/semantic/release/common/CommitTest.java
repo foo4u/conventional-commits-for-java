@@ -14,6 +14,7 @@ public class CommitTest
         assertTrue(create("feat!: add foo").isConventional());
         assertTrue(create("feat: add foo").isConventional());
         assertFalse(create("Add foo").isConventional());
+        assertTrue(create("refactor: code cleanup").isConventional());
     }
 
     @Test
