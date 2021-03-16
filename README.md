@@ -56,9 +56,9 @@ ci: add build step
 
 ##### Generated change log (CHANGELOG.MD):
 ## 1.0.0 (2020-11-14)
-###Breaking changes
+### Breaking changes
 * change public API [(ticket-23)](http://example.com/ticket-23) [(23b1e004c4)](http://example.com/23b1e004c45b56b633f09656a05875a5a5ff7e86)
-###CI
+### CI
 * add build step
 
 **Note**: changelog goal performs a commit that includes updated CHANGELOG.MD
