@@ -49,6 +49,22 @@ public class CommitTest
         assertEquals(ConventionalCommitType.FIX, create("fix(scope): foo").getCommitType().get());
     }
 
+    @Test
+    public void getMessage() {
+        assertEquals("commit message", create("fix: commit message").getCommitMessageDescription().get());
+        assertEquals("commit message", create("fix: [22] commit message").getCommitMessageDescription().get());
+        assertFalse( create("fix commit message").getCommitMessageDescription().isPresent());
+    }
+
+    @Test
+    public void getTrackingSystemId() {
+        assertEquals("22", create("fix: [22] commit message").getTrackingSystemId().get());
+        assertEquals("22", create("fix: [22 ] commit message").getTrackingSystemId().get());
+        assertEquals("22", create("fix:[ 22 ] commit message").getTrackingSystemId().get());
+        assertFalse(create("fix [22] commit message").getTrackingSystemId().isPresent());
+        assertFalse(create("fix: commit message").getTrackingSystemId().isPresent());
+    }
+
     static Commit create(String shortMessage)
     {
         return new Commit(new DummyCommitAdapter(shortMessage));

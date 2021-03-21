@@ -3,10 +3,18 @@ package com.smartling.cc4j.semantic.release.common;
 class DummyCommitAdapter implements CommitAdapter<DummyCommitAdapter>
 {
     private final String shortMessage;
+    private final String hash;
 
     DummyCommitAdapter(String shortMessage)
     {
         this.shortMessage = shortMessage;
+        this.hash = null;
+    }
+
+    DummyCommitAdapter(String shortMessage, String hash)
+    {
+        this.shortMessage = shortMessage;
+        this.hash = hash;
     }
 
     @Override
@@ -19,5 +27,10 @@ class DummyCommitAdapter implements CommitAdapter<DummyCommitAdapter>
     public DummyCommitAdapter getCommit()
     {
         return null;
+    }
+
+    @Override
+    public String getCommitHash() {
+        return this.hash;
     }
 }
