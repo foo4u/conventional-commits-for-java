@@ -22,7 +22,7 @@ public class LogHandler
     private final Repository repository;
     private final Git git;
 
-    public LogHandler(Repository repository)
+    public LogHandler(final Repository repository)
     {
         Objects.requireNonNull(repository, "repository cannot be null");
         this.repository = repository;
@@ -31,10 +31,10 @@ public class LogHandler
 
     RevCommit getLastTaggedCommit() throws IOException, GitAPIException
     {
-        List<Ref> tags = git.tagList().call();
-        List<ObjectId> peeledTags = tags.stream().map(t -> repository.peel(t).getPeeledObjectId()).collect(Collectors.toList());
-        PlotWalk walk = new PlotWalk(repository);
-        RevCommit start = walk.parseCommit(repository.resolve("HEAD"));
+        final List<Ref> tags = git.tagList().call();
+        final List<ObjectId> peeledTags = tags.stream().map(t -> repository.peel(t).getPeeledObjectId()).collect(Collectors.toList());
+        final PlotWalk walk = new PlotWalk(repository);
+        final RevCommit start = walk.parseCommit(repository.resolve("HEAD"));
 
         walk.markStart(start);
 
@@ -55,8 +55,8 @@ public class LogHandler
 
     public Iterable<RevCommit> getCommitsSinceLastTag() throws IOException, GitAPIException
     {
-        ObjectId start = repository.resolve("HEAD");
-        RevCommit lastCommit = this.getLastTaggedCommit();
+        final ObjectId start = repository.resolve("HEAD");
+        final RevCommit lastCommit = this.getLastTaggedCommit();
 
         if (lastCommit == null)
         {

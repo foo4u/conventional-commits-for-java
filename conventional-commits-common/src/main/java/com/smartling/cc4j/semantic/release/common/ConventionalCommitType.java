@@ -5,7 +5,7 @@ import java.util.List;
 
 public enum ConventionalCommitType implements Comparable<ConventionalCommitType>
 {
-    BREAKING_CHANGE(SemanticVersionChange.MAJOR, "breaking change", "!"),
+    BREAKING_CHANGE(SemanticVersionChange.MAJOR, "", "!"),
     BUILD(SemanticVersionChange.NONE, "build"),
     CHORE(SemanticVersionChange.MINOR, "chore"),
     CI(SemanticVersionChange.NONE, "ci"),
@@ -13,12 +13,13 @@ public enum ConventionalCommitType implements Comparable<ConventionalCommitType>
     FIX(SemanticVersionChange.PATCH, "fix"),
     FEAT(SemanticVersionChange.MINOR, "feat"),
     REFACTOR(SemanticVersionChange.MINOR, "refactor"),
+    STYLE(SemanticVersionChange.NONE, "style"),
     TEST(SemanticVersionChange.NONE, "test");
 
     private final List<String> commitTypes;
     private final SemanticVersionChange changeType;
 
-    ConventionalCommitType(SemanticVersionChange change, String... commitTypes)
+    ConventionalCommitType(final SemanticVersionChange change, final String... commitTypes)
     {
         this.commitTypes = Arrays.asList(commitTypes);
         this.changeType = change;

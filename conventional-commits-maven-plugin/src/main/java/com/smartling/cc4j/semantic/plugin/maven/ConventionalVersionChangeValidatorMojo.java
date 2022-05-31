@@ -19,15 +19,15 @@ public class ConventionalVersionChangeValidatorMojo extends AbstractVersioningMo
     {
         try
         {
-            ConventionalVersioning versioning = this.getConventionalVersioning();
-            SemanticVersionChange change = versioning.getNextVersionChangeType();
+            final ConventionalVersioning versioning = this.getConventionalVersioning();
+            final SemanticVersionChange change = versioning.getNextVersionChangeType();
 
             if (SemanticVersionChange.NONE.equals(change))
             {
                 throw new NoVersionChangeException("No conventional commit version change to release");
             }
         }
-        catch (IOException | ScmApiException e)
+        catch (final IOException | ScmApiException e)
         {
             throw new MojoExecutionException("Unable to access repository", e);
         }

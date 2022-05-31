@@ -33,29 +33,29 @@
         <dependency>
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit</artifactId>
-            <version>5.5.0.201909110433-r</version>
+            <version>6.1.0.202203080745-r</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.28</version>
+            <version>1.7.36</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.28</version>
+            <version>1.7.36</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>2.28.2</version>
+            <version>4.5.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -94,7 +94,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
+                <version>3.0.0-M5</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <dryRun>false</dryRun>
@@ -131,7 +131,7 @@
                     <plugin>
                         <groupId>com.smartling.cc4j</groupId>
                         <artifactId>conventional-commits-maven-plugin</artifactId>
-                        <version>0.1.0</version>
+                        <version>0.2.0</version>
                         <inherited>false</inherited>
                         <executions>
                             <execution>

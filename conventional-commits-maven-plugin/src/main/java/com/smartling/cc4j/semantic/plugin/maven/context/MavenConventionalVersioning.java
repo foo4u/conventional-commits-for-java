@@ -10,7 +10,7 @@ public class MavenConventionalVersioning
 {
     private final Repository repository;
 
-    public MavenConventionalVersioning(Repository repository)
+    public MavenConventionalVersioning(final Repository repository)
     {
         Objects.requireNonNull(repository, "repository required");
         this.repository = repository;

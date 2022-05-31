@@ -5,11 +5,13 @@ import java.util.Objects;
 
 public final class SemanticVersion
 {
+    public static final String VERSION_SUFFIX_SNAPSHOT = "-SNAPSHOT";
+
     private final Integer major;
     private final Integer minor;
     private final Integer patch;
 
-    public SemanticVersion(int major, int minor, int patch)
+    public SemanticVersion(final int major, final int minor, final int patch)
     {
         if (major < 0 || minor < 0 || patch < 0)
             throw new IllegalArgumentException("versions can only contain positive integers");
@@ -20,7 +22,7 @@ public final class SemanticVersion
     }
 
     @Override
-    public boolean equals(Object o)
+    public boolean equals(final Object o)
     {
         if (this == o)
         {
@@ -55,9 +57,9 @@ public final class SemanticVersion
         return patch;
     }
 
-    public SemanticVersion nextVersion(SemanticVersionChange change)
+    public SemanticVersion nextVersion(final SemanticVersionChange change)
     {
-        SemanticVersion nextVersion;
+        final SemanticVersion nextVersion;
 
         switch (change)
         {
@@ -68,8 +70,6 @@ public final class SemanticVersion
             nextVersion = new SemanticVersion(major, minor + 1, 0);
             break;
         case PATCH:
-            nextVersion = new SemanticVersion(major, minor, patch + 1);
-            break;
         case NONE:
             nextVersion = new SemanticVersion(major, minor, patch);
             break;
@@ -85,10 +85,10 @@ public final class SemanticVersion
         return toString(major, minor, patch);
     }
 
-    public static SemanticVersion parse(String version)
+    public static SemanticVersion parse(final String version)
     {
         Objects.requireNonNull(version, "version required");
-        String[] parts = version.split("\\.");
+        final String[] parts = version.replace(VERSION_SUFFIX_SNAPSHOT, "").split("\\.");
 
         if (parts.length != 3)
             throw new IllegalArgumentException("Invalid semantic version: " + version);
@@ -100,8 +100,13 @@ public final class SemanticVersion
         );
     }
 
-    private static String toString(int major, int minor, int patch)
+    private static String toString(final int major, final int minor, final int patch)
     {
         return String.format(Locale.US, "%d.%d.%d", major, minor, patch);
+    }
+
+    public String getDevelopmentVersionString()
+    {
+        return this.toString() + VERSION_SUFFIX_SNAPSHOT;
     }
 }

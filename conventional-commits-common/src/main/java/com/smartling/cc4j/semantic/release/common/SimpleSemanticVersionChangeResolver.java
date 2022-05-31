@@ -10,16 +10,16 @@ import java.util.Optional;
 public class SimpleSemanticVersionChangeResolver implements SemanticVersionChangeResolver
 {
     @Override
-    public SemanticVersionChange resolveChange(Iterable<RevCommit> commits)
+    public SemanticVersionChange resolveChange(final Iterable<RevCommit> commits)
     {
         Objects.requireNonNull(commits, "commits may not be null");
-        List<Commit> commitList = new ArrayList<>();
+        final List<Commit> commitList = new ArrayList<>();
         commits.iterator().forEachRemaining(c -> commitList.add(new Commit(new GitCommitAdapter(c))));
         SemanticVersionChange change = SemanticVersionChange.NONE;
 
-        for (Commit c : commitList)
+        for (final Commit c : commitList)
         {
-            Optional<ConventionalCommitType> commitType = c.getCommitType();
+            final Optional<ConventionalCommitType> commitType = c.getCommitType();
             if (commitType.isPresent())
             {
                 if (SemanticVersionChange.MAJOR.equals(commitType.get().getChangeType()))

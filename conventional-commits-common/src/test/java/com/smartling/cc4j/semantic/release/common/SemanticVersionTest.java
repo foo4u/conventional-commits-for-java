@@ -23,8 +23,8 @@ public class SemanticVersionTest
     @Test
     public void nextVersionPatch()
     {
-        SemanticVersion next = SemanticVersion.parse("9.10.11").nextVersion(SemanticVersionChange.PATCH);
-        assertEquals(new SemanticVersion(9, 10, 12), next);
+        SemanticVersion next = SemanticVersion.parse("9.10.11-SNAPSHOT").nextVersion(SemanticVersionChange.PATCH);
+        assertEquals(new SemanticVersion(9, 10, 11), next);
     }
 
     @Test
