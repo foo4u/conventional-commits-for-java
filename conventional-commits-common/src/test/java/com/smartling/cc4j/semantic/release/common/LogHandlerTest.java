@@ -47,7 +47,7 @@ public class LogHandlerTest {
     }
 
     @After
-    public void tearDown() throws Exception
+    public void tearDown()
     {
         //Files.delete(tempDir);
     }

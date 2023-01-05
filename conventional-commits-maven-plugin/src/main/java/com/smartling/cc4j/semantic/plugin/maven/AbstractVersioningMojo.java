@@ -34,29 +34,48 @@ abstract class AbstractVersioningMojo extends AbstractMojo
     @Parameter(defaultValue = "${reactorProjects}", readonly = true, required = true)
     private List<MavenProject> reactorProjects;
 
+    private SemanticVersion nextVersion;
+
+    private SemanticVersion nextDevelopmentVersion;
+
+    public String getOriginalVersion()
+    {
+        return this.versionString;
+    }
+
+    public SemanticVersion getNextVersion() throws IOException, ScmApiException
+    {
+        if (this.nextVersion == null) {
+            createReleaseProperties();
+        }
+
+        return this.nextVersion;
+    }
+
     ConventionalVersioning getConventionalVersioning() throws IOException
     {
-        Repository repository = new RepositoryBuilder().setWorkTree(baseDir).build();
+        final Repository repository = new RepositoryBuilder().setWorkTree(baseDir).build();
         //Repository repository = new RepositoryBuilder().findGitDir().build();
-        MavenConventionalVersioning mvnConventionalVersioning = new MavenConventionalVersioning(repository);
+        final MavenConventionalVersioning mvnConventionalVersioning = new MavenConventionalVersioning(repository);
+
         return mvnConventionalVersioning.getConventionalVersioning();
     }
 
     Properties createReleaseProperties() throws IOException, ScmApiException
     {
-        ConventionalVersioning versioning =  this.getConventionalVersioning();
-        Properties props = new Properties();
+        final ConventionalVersioning versioning =  this.getConventionalVersioning();
+        final Properties props = new Properties();
 
-        SemanticVersion nextVersion = versioning.getNextVersion(SemanticVersion.parse(versionString.replace("-SNAPSHOT", "")));
-        SemanticVersion nextDevelopmentVersion = nextVersion.nextVersion(SemanticVersionChange.PATCH);
+        this.nextVersion = versioning.getNextVersion(SemanticVersion.parse(versionString));
+        this.nextDevelopmentVersion = nextVersion.nextVersion(SemanticVersionChange.PATCH);
 
         // set properties for release plugin
-        props.setProperty(MVN_RELEASE_VERSION_PROPERTY, nextVersion.toString());
-        props.setProperty(MVN_DEVELOPMENT_VERSION_PROPERTY, nextDevelopmentVersion.toString() + "-SNAPSHOT");
+        props.setProperty(MVN_RELEASE_VERSION_PROPERTY, this.nextVersion.toString());
+        props.setProperty(MVN_DEVELOPMENT_VERSION_PROPERTY, this.nextDevelopmentVersion.getDevelopmentVersionString());
 
-        for (MavenProject project : reactorProjects)
+        for (final MavenProject project : reactorProjects)
         {
-            String projectKey = project.getGroupId() + ":" + project.getArtifactId();
+            final String projectKey = project.getGroupId() + ":" + project.getArtifactId();
             props.setProperty("project.rel." + projectKey, nextVersion.toString());
             props.setProperty("project.dev." + projectKey, nextDevelopmentVersion.toString());
         }

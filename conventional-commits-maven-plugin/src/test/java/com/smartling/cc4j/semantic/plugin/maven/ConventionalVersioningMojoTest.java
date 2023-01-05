@@ -15,7 +15,7 @@ public class ConventionalVersioningMojoTest extends AbstractScmMojoTest
     @Rule public MojoRule rule = new MojoRule()
     {
         @Override
-        protected void before() throws Throwable
+        protected void before()
         {
         }
 
@@ -31,19 +31,19 @@ public class ConventionalVersioningMojoTest extends AbstractScmMojoTest
     @Test
     public void testExecute() throws Exception
     {
-        File pom = projectPath.toFile();
+        final File pom = projectPath.toFile();
         assertNotNull(pom);
         assertTrue(pom.exists());
 
-        ConventionalVersioningMojo myMojo = (ConventionalVersioningMojo) rule.lookupConfiguredMojo(pom, "version");
+        final ConventionalVersioningMojo myMojo = (ConventionalVersioningMojo) rule.lookupConfiguredMojo(pom, "version");
         assertNotNull(myMojo);
         myMojo.execute();
 
-        File outputDirectory = (File) rule.getVariableValueFromObject(myMojo, "outputDirectory");
+        final File outputDirectory = (File) rule.getVariableValueFromObject(myMojo, "outputDirectory");
         assertNotNull(outputDirectory);
         assertTrue(outputDirectory.exists());
 
-        File touch = new File(outputDirectory, "version.props");
+        final File touch = new File(outputDirectory, "version.props");
         assertTrue(touch.exists());
     }
 

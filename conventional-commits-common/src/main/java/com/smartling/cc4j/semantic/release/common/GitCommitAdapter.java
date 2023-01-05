@@ -8,7 +8,7 @@ public class GitCommitAdapter implements CommitAdapter<RevCommit>
 {
     private final RevCommit commit;
 
-    GitCommitAdapter(RevCommit commit)
+    GitCommitAdapter(final RevCommit commit)
     {
         Objects.requireNonNull(commit, "commit cannot be null");
         this.commit = commit;

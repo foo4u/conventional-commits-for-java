@@ -8,9 +8,9 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -24,21 +24,22 @@ public class ConventionalVersioningMojo extends AbstractVersioningMojo
     {
         try
         {
-            Properties props = this.createReleaseProperties();
+            final Properties props = this.createReleaseProperties();
 
-            session.getExecutionProperties().putAll(props);
+            session.getUserProperties().putAll(props);
             writeVersionFile(props);
-            getLog().warn(String.format(Locale.US, "Set release properties: %s", props));
+
+            getLog().info(String.format(Locale.US, "Set release properties: %s", props));
         }
-        catch (IOException | ScmApiException e)
+        catch (final IOException | ScmApiException e)
         {
             throw new MojoExecutionException("SCM error: " + e.getMessage(), e);
         }
     }
 
-    private void writeVersionFile(Properties props) throws MojoExecutionException
+    private void writeVersionFile(final Properties props) throws MojoExecutionException
     {
-        File f = outputDirectory;
+        final File f = outputDirectory;
 
         if (!f.exists())
         {
@@ -47,11 +48,11 @@ public class ConventionalVersioningMojo extends AbstractVersioningMojo
 
         File touch = new File(f, "version.props");
 
-        try (OutputStream out = new FileOutputStream(touch))
+        try (OutputStream out = Files.newOutputStream(touch.toPath()))
         {
             props.store(out, "");
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             throw new MojoExecutionException("Error creating file " + touch, e);
         }

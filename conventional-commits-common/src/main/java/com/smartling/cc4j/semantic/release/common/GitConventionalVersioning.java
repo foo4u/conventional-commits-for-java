@@ -34,12 +34,12 @@ public class GitConventionalVersioning implements ConventionalVersioning
     {
         try
         {
-            Iterable<RevCommit> commits = logHandler().getCommitsSinceLastTag();
-            SemanticVersionChangeResolver resolver = semanticVersionChangeResolver();
+            final Iterable<RevCommit> commits = logHandler().getCommitsSinceLastTag();
+            final SemanticVersionChangeResolver resolver = semanticVersionChangeResolver();
 
             return resolver.resolveChange(commits);
         }
-        catch (GitAPIException e)
+        catch (final GitAPIException e)
         {
             throw new ScmApiException("Git operation failed", e);
         }
@@ -48,7 +48,7 @@ public class GitConventionalVersioning implements ConventionalVersioning
     @Override
     public SemanticVersion getNextVersion(SemanticVersion currentVersion) throws IOException, ScmApiException
     {
-        SemanticVersionChange change = this.getNextVersionChangeType();
+        final SemanticVersionChange change = this.getNextVersionChangeType();
         return currentVersion.nextVersion(change);
     }
 }

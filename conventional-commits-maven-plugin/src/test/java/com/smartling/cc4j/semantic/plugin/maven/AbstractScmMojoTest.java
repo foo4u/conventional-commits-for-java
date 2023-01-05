@@ -24,8 +24,8 @@ public class AbstractScmMojoTest
     @Before
     public void setUp() throws Exception
     {
-        Path tempDir = Files.createTempDirectory("convention-commits-version-change-mojo-test");
-        Path sourceProjectPath = Paths.get("target/test-classes/project-to-test/pom.xml");
+        final Path tempDir = Files.createTempDirectory("convention-commits-version-change-mojo-test");
+        final Path sourceProjectPath = Paths.get("target/test-classes/project-to-test/pom.xml");
         Files.copy(sourceProjectPath, tempDir.resolve("pom.xml"));
 
         this.repository = new RepositoryBuilder().setWorkTree(tempDir.toFile()).build();
@@ -42,8 +42,8 @@ public class AbstractScmMojoTest
 
     void createCommit(String commitMessage) throws IOException, GitAPIException
     {
-        String filename = String.format(Locale.US, "%s.txt", UUID.randomUUID().toString());
-        BufferedWriter writer = new BufferedWriter(new FileWriter(projectPath.resolve(filename).toFile()));
+        final String filename = String.format(Locale.US, "%s.txt", UUID.randomUUID());
+        final BufferedWriter writer = new BufferedWriter(new FileWriter(projectPath.resolve(filename).toFile()));
         writer.write("Hello world");
         writer.newLine();
         writer.close();

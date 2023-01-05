@@ -6,8 +6,13 @@ import java.util.regex.Pattern;
 
 public class Commit
 {
-    private static final Pattern BREAKING_REGEX = Pattern.compile("^(fix|feat)!.+", Pattern.CASE_INSENSITIVE);
+    private static final Pattern BREAKING_REGEX = Pattern.compile(
+        "^((build|chore|ci|docs|fix|feat|refactor|style|test)[a-z0-9\\(\\)]*)((\\!([\\s]*:(.|\\n)*))|" +
+            "([\\s]*:(.|\\n)*(BREAKING(\\s|-)CHANGE)(.|\\n)*))", Pattern.CASE_INSENSITIVE);
 
+    private static final Pattern CONVENTIONAL_COMMIT_REGEX = Pattern.compile(
+        "^((build|chore|ci|docs|fix|feat|refactor|style|test)[a-z0-9\\(\\)]*)((\\!([\\s]*:" +
+            "(.|\\n)*))|([\\s]*:(.|\\n)*))", Pattern.CASE_INSENSITIVE);
     private final CommitAdapter commit;
 
     public Commit(CommitAdapter commit)
@@ -40,29 +45,22 @@ public class Commit
             return Optional.of(ConventionalCommitType.BREAKING_CHANGE);
         }
 
-        for (ConventionalCommitType cc : ConventionalCommitType.values())
+        if (CONVENTIONAL_COMMIT_REGEX.matcher(msg).matches())
         {
-            for (String t : cc.getCommitTypes())
-            {
-                if (msg.startsWith(t))
+            for (ConventionalCommitType cc : ConventionalCommitType.values()) {
+                if (ConventionalCommitType.BREAKING_CHANGE.equals(cc))
                 {
-                    type = cc;
-                    break;
+                    continue;
+                }
+
+                for (String t : cc.getCommitTypes()) {
+                    if (msg.startsWith(t)) {
+                        type = cc;
+                        break;
+                    }
                 }
             }
         }
-
-        // FIXME: check for breaking change in footer
-/*
-        for (FooterLine footerLine : commit.getFooterLines())
-        {
-            if (footerLine.getKey().equalsIgnoreCase(ConventionalCommitType.BREAKING_CHANGE.getCommitTypes().get(0))) {
-                type = ConventionalCommitType.BREAKING_CHANGE;
-                break;
-            }
-        }
-
- */
 
         return Optional.ofNullable(type);
     }

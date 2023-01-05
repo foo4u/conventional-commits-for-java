@@ -4,7 +4,7 @@ import org.apache.maven.plugin.MojoFailureException;
 
 public class NoVersionChangeException extends MojoFailureException
 {
-    public NoVersionChangeException(String message)
+    public NoVersionChangeException(final String message)
     {
         super(message);
     }
