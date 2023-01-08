@@ -48,7 +48,11 @@ public class GitConventionalVersioning implements ConventionalVersioning
     @Override
     public SemanticVersion getNextVersion(SemanticVersion currentVersion) throws IOException, ScmApiException
     {
+        SemanticVersion nextVersion = currentVersion;
         SemanticVersionChange change = this.getNextVersionChangeType();
-        return currentVersion.nextVersion(change);
+        if (!SemanticVersionChange.PATCH.equals(change)) {
+            nextVersion = currentVersion.nextVersion(change);
+        }
+        return nextVersion;
     }
 }
